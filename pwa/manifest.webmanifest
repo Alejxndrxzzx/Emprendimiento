@@ -1,0 +1,16 @@
+{
+  "name": "Mi Emprendimiento",
+  "short_name": "Emprendimiento",
+  "description": "Controla tu inversión, ventas, compras y deudores.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2f5bea",
+  "theme_color": "#2f5bea",
+  "lang": "es",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
