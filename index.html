@@ -72,6 +72,8 @@ nav button.on{color:var(--pri);font-weight:700}
 <input type="file" id="fi" accept=".json,application/json" hidden>
 <script>
 window.addEventListener("error",function(e){var a=document.getElementById("app");if(a)a.innerHTML='<div style="padding:20px;font-family:system-ui,sans-serif"><h2>⚠️ Ocurrió un error</h2><p style="word-break:break-word">'+String(e.message).replace(/</g,"&lt;")+" (línea "+e.lineno+')</p><p>Tómale una captura de pantalla y envíasela a Claude.</p></div>'});
+</script>
+<script>
 const K="emp2",PN={hoy:"Hoy",semana:"7 días",mes:"Este mes",todo:"Todo"};
 const cats=()=>S.neg?["Mercancía","Servicios","Transporte","Arriendo","Otros"]:["Comida","Transporte","Servicios","Arriendo","Salud","Ocio","Otros"];
 const vacio=()=>({neg:true,nombre:"",caja0:0,mov:[],prod:[],cli:[],prov:[],deu:[],ven:[]});
@@ -102,7 +104,7 @@ function calc(ok){
 }
 const saldo=()=>{const a=calc(()=>true);return S.caja0+a.ing-a.egr};
 const deb=k=>sum(S.deu.filter(d=>d.k===k),d=>d.m);
-const top=V=>{const m={};V.forEach(v=>v.it.forEach(i=>m[i.n]=(m[i.n]||0)+i.q));return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5)};
+const masVendidos=V=>{const m={};V.forEach(v=>v.it.forEach(i=>m[i.n]=(m[i.n]||0)+i.q));return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5)};
 const porCat=G=>{const m={};G.forEach(x=>m[x.c]=(m[x.c]||0)+x.m);return Object.entries(m).sort((a,b)=>b[1]-a[1])};
 const bars=(a,f)=>{const mx=Math.max(1,...a.map(x=>x[1]));return a.map(x=>`<div style="margin:9px 0"><div class="row"><span>${esc(x[0])}</span><b>${f(x[1])}</b></div><div class="b2"><i style="width:${x[1]/mx*100}%"></i></div></div>`).join("")||'<div class="empty">Sin datos todavía</div>'};
 
@@ -245,7 +247,7 @@ function view(){
   <div class="item"><span>Gastos del negocio</span><b>-${$(r.go)}</b></div>
   <div class="item"><span>Ganancia real</span><b class="${r.gan>=0?"ok":"bad"}">${$(r.gan)}</b></div>
   <div class="mut">El saldo de caja no es lo mismo que la ganancia: la caja incluye tu inversión y no cuenta lo que te deben.</div></div>
-  <div class="card"><h3>Productos más vendidos</h3>${bars(top(r.V),v=>v+" u.")}</div>`:""}
+  <div class="card"><h3>Productos más vendidos</h3>${bars(masVendidos(r.V),v=>v+" u.")}</div>`:""}
   <div class="card"><h3>Gastos por categoría</h3>${bars(porCat(r.G),$)}</div>
   <button class="btn" id="sd">📤 Compartir reporte</button>
   <button class="btn line" data-h="a|caja0">Cambiar dinero inicial</button>
